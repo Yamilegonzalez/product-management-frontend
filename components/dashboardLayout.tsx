@@ -1,45 +1,60 @@
 'use client'
 
-import { Category } from '@/app/api/models/category/Category';
-import { getCat } from '@/app/api/services/productService';
-import Link from 'next/link'
+import { useStore } from '@/stores/useStore';
 import { useEffect, useState } from 'react'
-
-
+import { CategoryRow } from './ui/CategoryRow';
+import { CategoryAddModal } from './modals/Categories/CategoryAddModal';
+import { CategoryEditModal } from './modals/Categories/CategoryEditModal';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [categories, setCategories] = useState<Array<Category>>([])
+    const categories = useStore((state) => state.categories);
+    const fetchCategories = useStore((state) => state.fetchCategories);
+    const setCategoryFilter = useStore((state) => state.setCategoryFilterId);
+    const [isAddCategory, setIsAddCategory] = useState(false);
+    const [idCategorySel, setIdCategorySel] = useState(0);
+    const [isEditCategory, setIsEditCategory] = useState(false);
 
-    useEffect(()=>{
-        loadCategories();
-    },[]);
-    const loadCategories = async () =>{
-        let response = await getCat();
-        setCategories(response);
+    useEffect(() => {
+        fetchCategories();
+    }, [fetchCategories]);
+
+    const editCategory = (id: number) => {
+        setIdCategorySel(id)
+        setIsEditCategory(true);
     }
 
     return (
         <div className="min-h-screen flex">
-            <aside className="h-fit min-h-[calc(100vh-100px)] w-52 bg-[#cccccc] text-black p-8 rounded-tr-3xl rounded-br-3xl shadow-lg mt-4 ml-4 flex flex-col justify-between">
+            <CategoryAddModal
+                open={isAddCategory}
+                onClose={() => setIsAddCategory(false)}
+            />
+            <CategoryEditModal
+                open={isEditCategory}
+                categoryId={idCategorySel}
+                onClose={() => setIsEditCategory(false)}
+            />
+            <aside className="h-fit min-h-[calc(100vh-100px)] w-53 bg-[#cccccc] text-black p-8 rounded-tr-3xl rounded-br-3xl shadow-lg mt-4 ml-4 flex flex-col justify-between">
                 <div>
                     <h2 className="text-lg font-semibold mb-9">Categorías</h2>
                     <ul className="space-y-5 text-sm">
-                        {categories.length === 0 &&(
+                        {categories.length === 0 && (
                             <span>Cargando...</span>
                         )}
                         {categories.map((cat) => (
                             <li key={cat.id}>
-                                <Link
-                                    href={`/categoria/${encodeURIComponent(cat.name)}`}
-                                    className="block hover:bg-white hover:text-[#ff5722] rounded px-3 py-3 transition"
-                                >
-                                    {cat.name}
-                                </Link>
+                                <CategoryRow name={cat.name}
+                                    id={cat.id}
+                                    onEdit={() => editCategory(cat.id)}
+                                    onSelect={() => setCategoryFilter(cat.id)}
+                                />
                             </li>
                         ))}
                     </ul>
                 </div>
-
+                <CategoryRow name={''}
+                    addNew={() => setIsAddCategory(true)}
+                />
                 <button
                     className="flex items-center gap-1 text-sm bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-200 shadow-sm" onClick={() => (window.location.href = '/login')}
                 >

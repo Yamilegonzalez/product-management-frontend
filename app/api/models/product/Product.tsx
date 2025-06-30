@@ -3,17 +3,17 @@ export class Product {
     name: string
     description: string
     price: number
-    imageURL: string
+    imageUrl: string
     categoryId: string
-
+    category?: string
 
     constructor(data: any) {
         this.id = data.id
         this.name = data.name
         this.price = data.price
         this.description = data.description
-        this.imageURL = data.imageUrl
-        this.categoryId = data.category
+        this.imageUrl = data.imageUrl
+        this.categoryId = data.categoryId
     }
 
     get formattedPrice(): string {

@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -13,6 +12,16 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn1.coppel.com',
         pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn-images.dzcdn.net',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'archive.org',
+        pathname: '/**',
       },
     ]
   }
