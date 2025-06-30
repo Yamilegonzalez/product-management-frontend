@@ -34,10 +34,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 categoryId={idCategorySel}
                 onClose={() => setIsEditCategory(false)}
             />
-            <aside className="h-fit min-h-[calc(100vh-100px)] w-53 bg-[#cccccc] text-black p-8 rounded-tr-3xl rounded-br-3xl shadow-lg mt-4 ml-4 flex flex-col justify-between">
+            <aside className="h-fit min-h-[calc(100vh-100px)] w-70 bg-[#cccccc] text-black p-8 rounded-tr-3xl rounded-br-3xl shadow-lg mt-4 ml-4 flex flex-col justify-between">
                 <div>
-                    <h2 className="text-lg font-semibold mb-9">Categorías</h2>
-                    <ul className="space-y-5 text-sm">
+                    <h2 className="text-3xl font-extrabold text-gray-800 mb-10 tracking-wide">Categorías</h2>
+                    <ul className="space-y-9 text-base">
                         {categories.length === 0 && (
                             <span>Cargando...</span>
                         )}
@@ -52,14 +52,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         ))}
                     </ul>
                 </div>
-                <CategoryRow name={''}
-                    addNew={() => setIsAddCategory(true)}
-                />
+                <CategoryRow
+                    name={''}
+                    addNew={() => setIsAddCategory(true)} id={0}                />
+
                 <button
-                    className="flex items-center gap-1 text-sm bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-200 shadow-sm" onClick={() => (window.location.href = '/login')}
+                    className="flex items-center gap-3 text-base font-semibold bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 active:scale-95 transition transform duration-200 shadow-lg shadow-red-400/40"
+                    onClick={() => (window.location.href = '/login')}
                 >
                     Cerrar sesión
                 </button>
+
             </aside>
 
             <div className="flex-1 flex flex-col">

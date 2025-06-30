@@ -41,7 +41,6 @@ export default function HomePage() {
   }, [fetchProducts])
 
   useEffect(() => {
-    console.log(categoryIdFilter);
     if (categoryIdFilter == 0) {
       setFiltrados(products);
       return;
@@ -49,7 +48,6 @@ export default function HomePage() {
     const nuevosF = products.filter((p) => {
       return p.categoryId == String(categoryIdFilter)
     })
-    console.log(nuevosF);
     setFiltrados(nuevosF);
   }, [categoryIdFilter])
 
@@ -91,15 +89,16 @@ export default function HomePage() {
   return (
     <DashboardLayout>
       <header className="bg-[#ff5722] text-white flex items-center justify-between p-4 px-6 rounded-lg shadow mb-6">
-        <div className="flex items-center gap-2">
-          <Image src="/Logo.jpeg" alt="Logo" width={40} height={40} />
-          <span className="font-bold text-xl">TecnoShop</span>
+        <div className="flex items-center gap-3">
+          <Image src="/Logo.jpeg" alt="Logo" width={50} height={50} className="rounded-full shadow-md" />
+          <span className="text-4xl font-extrabold text-white tracking-wide">TecnoShop</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span>Hola Julia</span>
+
+        <div className="flex items-center gap-7">
+          <span className="font-extrabold text-2xl text-white tracking-wide " >Hola Julia</span>
           <Image
-            src="/profile.jpg"
+            src="/profile.jpeg"
             alt="Foto"
             width={36}
             height={36}
@@ -132,9 +131,9 @@ export default function HomePage() {
         onConfirm={handleDeleteProduct}
       />
 
-      <div className="max-w-6xl mx-auto bg-white border-2 border-[#ff5722]/20 rounded-3xl p-10 shadow-xl space-y-8 mb-28">
+      <div className="max-w-9xl mx-auto bg-white border-2 border-[#ff5722]/20 rounded-3xl p-10 shadow-xl space-y-8 mb-28">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-800">Productos</h2>
+          <h2 className="text-3xl font-bold text-gray-800 tracking-wide ">Productos</h2>
           <div className="relative w-64">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
             <input
@@ -154,7 +153,7 @@ export default function HomePage() {
         {categoryIdFilter != 0 && (
           <span className='' onClick={() => setCategoryFilter(0)}>{categoryIdFilter}</span>
         )}
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <li
             key={-1}
             className="border p-50 rounded-xl shadow-md bg-white hover:shadow-lg transition cursor-pointer flex items-center justify-center"

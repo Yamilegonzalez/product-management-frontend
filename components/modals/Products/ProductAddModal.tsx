@@ -33,8 +33,6 @@ export const ProductAddModal = ({ open, onClose }: ProductEditModalProps) => {
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
-        console.log(name)
-        console.log(value)
         if (product) {
             const updatedProduct = new Product({ ...product, [name]: value });
             setProduct(updatedProduct);

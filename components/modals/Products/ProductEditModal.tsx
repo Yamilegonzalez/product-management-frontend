@@ -35,8 +35,6 @@ export const ProductEditModal = ({
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
-        console.log(name)
-        console.log(value)
         if (product) {
             const updatedProduct = new Product({
                 ...product,
@@ -48,11 +46,8 @@ export const ProductEditModal = ({
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
-        console.log(name)
-        console.log(value)
         if (product) {
             const updatedProduct = new Product({ ...product, [name]: value });
-            console.log(updatedProduct);
             setProduct(updatedProduct);
         }
     };
