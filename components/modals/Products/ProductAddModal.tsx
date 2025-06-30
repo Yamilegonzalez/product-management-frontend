@@ -6,7 +6,7 @@ import { SelectField } from '../../ui/SelectField'
 
 interface ProductEditModalProps {
     open: boolean
-    onClose: (success: Boolean) => void
+    onClose: (success: boolean) => void
 }
 export const ProductAddModal = ({ open, onClose }: ProductEditModalProps) => {
     const addProduct = useStore((state) => state.addProduct);

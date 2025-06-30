@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Product } from '@/app/api/models/product/Product'
 import { useStore } from '@/stores/useStore'
+import Image from 'next/image'
 
 
 interface ProductDetailModalProps {
@@ -18,17 +19,17 @@ export const ProductDetailModal = ({
     const [loading, setLoading] = useState(false)
     const fetchProduct = useStore((state) => state.fetchProduct);
 
+    const loadProduct = useCallback(async () => {
+        setLoading(true);
+        const response = await fetchProduct(productId);
+        setProduct(response);
+        setLoading(false);
+    }, [productId, fetchProduct]);
+
     useEffect(() => {
         if (productId == 0 || !open) return
         loadProduct();
-    }, [productId, open])
-
-    const loadProduct = async () => {
-        setLoading(true)
-        let response = await fetchProduct(productId);
-        setProduct(response);
-        setLoading(false)
-    }
+    }, [productId, open, loadProduct])
 
     if (!open) return null;
 
@@ -46,8 +47,11 @@ export const ProductDetailModal = ({
                         <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
 
                         <div className="flex justify-center">
-                            <img
+                            <Image
                                 src={product.imageUrl}
+                                alt={product.name}
+                                width={0}
+                                height={0}
                                 className="w-32 h-32 object-cover rounded-full border"
                             />
                         </div>

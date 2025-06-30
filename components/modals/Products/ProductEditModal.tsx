@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Product } from '@/app/api/models/product/Product'
 import { InputField } from '../../ui/InputField'
 import { useStore } from '@/stores/useStore'
@@ -6,7 +6,7 @@ import { SelectField } from '../../ui/SelectField'
 interface ProductEditModalProps {
     productId: number
     open: boolean
-    onClose: (res: Boolean) => void
+    onClose: (res: boolean) => void
 }
 
 export const ProductEditModal = ({
@@ -22,17 +22,19 @@ export const ProductEditModal = ({
     const fetchProduct = useStore((state) => state.fetchProduct);
     const updateProduct = useStore((state) => state.updateProduct);
 
+    const loadProduct = useCallback(async () => {
+        setLoading(true);
+        const response = await fetchProduct(productId);
+        setProduct(response);
+        setLoading(false);
+    }, [productId, fetchProduct]);
+
     useEffect(() => {
         if (productId == 0 || !open) return
         loadProduct();
-    }, [productId, open])
+    }, [productId, open, loadProduct])
 
-    const loadProduct = async () => {
-        setLoading(true)
-        let response = await fetchProduct(productId);
-        setProduct(response);
-        setLoading(false)
-    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         if (product) {

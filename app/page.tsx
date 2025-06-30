@@ -49,7 +49,7 @@ export default function HomePage() {
       return p.categoryId == String(categoryIdFilter)
     })
     setFiltrados(nuevosF);
-  }, [categoryIdFilter])
+  }, [categoryIdFilter, products])
 
   const loadData = async () => {
     fetchProducts();
@@ -79,7 +79,7 @@ export default function HomePage() {
     setIsDeleteModalProductOpen(false);
   }
 
-  const closeAndRecharge = (reload: Boolean, exec: () => void) => {
+  const closeAndRecharge = (reload: boolean, exec: () => void) => {
     if (reload) {
       loadData();
     }
@@ -110,7 +110,7 @@ export default function HomePage() {
       <ProductEditModal
         productId={productIdSelected}
         open={isEditModalOpen}
-        onClose={(res: Boolean) => closeAndRecharge(res, () => setIsEditModalOpen(false))} />
+        onClose={(res: boolean) => closeAndRecharge(res, () => setIsEditModalOpen(false))} />
 
       <ProductDetailModal
         productId={productIdSelected}
@@ -120,7 +120,7 @@ export default function HomePage() {
 
       <ProductAddModal
         open={isNewModalOpen}
-        onClose={(res: Boolean) => closeAndRecharge(res, () => setIsNewModalOpen(false))}
+        onClose={(res: boolean) => closeAndRecharge(res, () => setIsNewModalOpen(false))}
       />
 
       <ConfirmDialog

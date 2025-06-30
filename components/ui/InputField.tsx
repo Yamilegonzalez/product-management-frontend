@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 interface InputFieldProps {
     label: string;
     name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type: string;

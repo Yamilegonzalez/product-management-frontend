@@ -1,7 +1,7 @@
 import { Category } from '@/app/api/models/category/Category';
 import { InputField } from '@/components/ui/InputField';
 import { useStore } from '@/stores/useStore';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 interface CategoryAddModalProps {
@@ -16,15 +16,16 @@ export const CategoryEditModal = ({ categoryId, open, onClose }: CategoryAddModa
     const fetchCategory = useStore((state) => state.fetchCategory);
     const fetchProducts = useStore((state) => state.fetchProducts);
 
+    const loadCategory = useCallback  (async()=>{
+        const response = await fetchCategory(categoryId);
+        setCategory(response);
+    },[categoryId, fetchCategory])
+
     useEffect(() => {
         if (categoryId == 0 || !open) return
         loadCategory();
-    }, [categoryId, open])
+    }, [categoryId, open, loadCategory])
 
-    const loadCategory = async () => {
-        let response = await fetchCategory(categoryId);
-        setCategory(response);
-    }
 
     if (!open) return null;
 
